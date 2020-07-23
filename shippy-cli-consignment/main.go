@@ -7,12 +7,13 @@ import (
 	"os"
 
 	"context"
+
 	pb "github.com/farit2000/shippy/shippy-service-consignment/proto/consignment"
+
 	"github.com/micro/go-micro/v2"
 )
 
 const (
-	address         = "localhost:50051"
 	defaultFilename = "consignment.json"
 )
 
@@ -27,10 +28,10 @@ func parseFile(file string) (*pb.Consignment, error) {
 }
 
 func main() {
-	service := micro.NewService(micro.Name("shippy.consignment.cli"))
+	service := micro.NewService(micro.Name("shippy.cli.consignment"))
 	service.Init()
 
-	client := pb.NewShipplyService("shippy.consignment.service", service.Client())
+	client := pb.NewShipplyService("shippy.service.consignment", service.Client())
 
 	// Contact the server and print out its response.
 	file := defaultFilename

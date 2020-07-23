@@ -33,33 +33,33 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Api Endpoints for ShipplyService service
+// Api Endpoints for ShippingService service
 
-func NewShipplyServiceEndpoints() []*api.Endpoint {
+func NewShippingServiceEndpoints() []*api.Endpoint {
 	return []*api.Endpoint{}
 }
 
-// Client API for ShipplyService service
+// Client API for ShippingService service
 
-type ShipplyService interface {
+type ShippingService interface {
 	CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error)
 	GetConsignments(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error)
 }
 
-type shipplyService struct {
+type shippingService struct {
 	c    client.Client
 	name string
 }
 
-func NewShipplyService(name string, c client.Client) ShipplyService {
-	return &shipplyService{
+func NewShippingService(name string, c client.Client) ShippingService {
+	return &shippingService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *shipplyService) CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "ShipplyService.CreateConsignment", in)
+func (c *shippingService) CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "ShippingService.CreateConsignment", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -68,8 +68,8 @@ func (c *shipplyService) CreateConsignment(ctx context.Context, in *Consignment,
 	return out, nil
 }
 
-func (c *shipplyService) GetConsignments(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error) {
-	req := c.c.NewRequest(c.name, "ShipplyService.GetConsignments", in)
+func (c *shippingService) GetConsignments(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error) {
+	req := c.c.NewRequest(c.name, "ShippingService.GetConsignments", in)
 	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -78,33 +78,33 @@ func (c *shipplyService) GetConsignments(ctx context.Context, in *GetRequest, op
 	return out, nil
 }
 
-// Server API for ShipplyService service
+// Server API for ShippingService service
 
-type ShipplyServiceHandler interface {
+type ShippingServiceHandler interface {
 	CreateConsignment(context.Context, *Consignment, *Response) error
 	GetConsignments(context.Context, *GetRequest, *Response) error
 }
 
-func RegisterShipplyServiceHandler(s server.Server, hdlr ShipplyServiceHandler, opts ...server.HandlerOption) error {
-	type shipplyService interface {
+func RegisterShippingServiceHandler(s server.Server, hdlr ShippingServiceHandler, opts ...server.HandlerOption) error {
+	type shippingService interface {
 		CreateConsignment(ctx context.Context, in *Consignment, out *Response) error
 		GetConsignments(ctx context.Context, in *GetRequest, out *Response) error
 	}
-	type ShipplyService struct {
-		shipplyService
+	type ShippingService struct {
+		shippingService
 	}
-	h := &shipplyServiceHandler{hdlr}
-	return s.Handle(s.NewHandler(&ShipplyService{h}, opts...))
+	h := &shippingServiceHandler{hdlr}
+	return s.Handle(s.NewHandler(&ShippingService{h}, opts...))
 }
 
-type shipplyServiceHandler struct {
-	ShipplyServiceHandler
+type shippingServiceHandler struct {
+	ShippingServiceHandler
 }
 
-func (h *shipplyServiceHandler) CreateConsignment(ctx context.Context, in *Consignment, out *Response) error {
-	return h.ShipplyServiceHandler.CreateConsignment(ctx, in, out)
+func (h *shippingServiceHandler) CreateConsignment(ctx context.Context, in *Consignment, out *Response) error {
+	return h.ShippingServiceHandler.CreateConsignment(ctx, in, out)
 }
 
-func (h *shipplyServiceHandler) GetConsignments(ctx context.Context, in *GetRequest, out *Response) error {
-	return h.ShipplyServiceHandler.GetConsignments(ctx, in, out)
+func (h *shippingServiceHandler) GetConsignments(ctx context.Context, in *GetRequest, out *Response) error {
+	return h.ShippingServiceHandler.GetConsignments(ctx, in, out)
 }
